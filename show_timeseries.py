@@ -35,10 +35,11 @@ distinct_query = 'SELECT DISTINCT(station) FROM {}'
 all_stations = set()
 param_stations = defaultdict(set)
 prefix_stations = defaultdict(set)
+suffixes = defaultdict(set)
 
 for ts in timeseries:
     param = ts.split('_', 2)[2]
-    prefix = param.split('_')[0]
+    prefix, suffix = param.split('_', 1)
 
     res = cur.execute(distinct_query.format(ts))
     values = res.fetchall()
@@ -47,6 +48,7 @@ for ts in timeseries:
         all_stations.add(station)
         param_stations[param].add(station)
         prefix_stations[prefix].add(station)
+        suffixes[prefix].add(suffix)  # set only if there is actual data
 
 query = '''
 SELECT * FROM {} ORDER BY time {} LIMIT 1
@@ -82,6 +84,7 @@ utc = datetime.timezone.utc
 print('prefixes')
 for pre in sorted(prefix_start.keys()):
     print('', pre+'_', *[p for p in sorted(prefix_stations[pre])])
+    print(' ', *suffixes[pre])
     print(' ', min(prefix_start[pre]), max(prefix_end[pre]))
     print(' ', datetime.datetime.fromtimestamp(min(prefix_start[pre]), tz=utc).isoformat(),
           datetime.datetime.fromtimestamp(max(prefix_end[pre]), tz=utc).isoformat())
