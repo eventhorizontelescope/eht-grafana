@@ -34,23 +34,38 @@ for station in stations:
         data = []
         with open(fname, 'r') as fd:
             for line in fd:
-                parts = line.split(',')
+                line = line.rstrip()
+                if line == '':
+                    # ../vlbimon-bridge/data/PICO/telescope_pointingCorrection.csv has extra \n
+                    continue
+                parts = line.split(',', 1)
 
-                if len(parts) != 2:
-                    raise ValueError('invalid line: '+line)
+                if value_type != str and ',' in parts[1]:
+                    raise ValueError('invalid line: '+fname+' '+line)
+                if len(parts) == 1:
+                    raise ValueError('invalid line: '+fname+' '+line)
                 ts, value = parts
+                if ts == '946684800':
+                    # Jan 1 2000 bug
+                    continue
                 if not ts.isdigit():
-                    raise ValueError('invalid timestamp in line: '+line)
+                    raise ValueError('invalid timestamp in line: '+fname+' '+line)
                 ts = int(ts)
                 if ts < last_ts:
-                    raise ValueError('saw backword in time, {} and {} in line {}'.format(last_ts, ts, line))
+                    print('{} saw backword in time, {} and {} in line {}'.format(fname, last_ts, ts, line))
+                    #raise ValueError('{} saw backword in time, {} and {} in line {}'.format(fname, last_ts, ts, line))
                 if ts == last_ts:
                     # silently drop dup. might want to check if value is ==
-                    print('skipping dup', ts)
+                    #print('skipping dup', ts)
                     continue
                 last_ts = ts
 
-                value = value_type(value)
+                try:
+                    value = value_type(value)
+                except Exception as e:
+                    print(fname, repr(e))
+                    continue
+
                 data.append((ts, station, value))
         cur.executemany('INSERT INTO ts_param_{} VALUES(?, ?, ?)'.format(param), data)
         con.commit()
