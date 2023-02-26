@@ -26,7 +26,7 @@ python insert_station.py /path/to/vlbimon-bridge/data
 ```
 
 You should end up with a `vlbimon.db` file. One day of 2022 vlbimon
-data is 41 megabytes.
+data is 17 megabytes.
 
 ## Install Grafana
 

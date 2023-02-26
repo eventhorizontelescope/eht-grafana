@@ -51,6 +51,9 @@ for station in stations:
                 if not ts.isdigit():
                     raise ValueError('invalid timestamp in line: '+fname+' '+line)
                 ts = int(ts)
+                if ts < 1647543720:
+                    # get rid of early data points
+                    continue
                 if ts < last_ts:
                     print('{} saw backword in time, {} and {} in line {}'.format(fname, last_ts, ts, line))
                     #raise ValueError('{} saw backword in time, {} and {} in line {}'.format(fname, last_ts, ts, line))
