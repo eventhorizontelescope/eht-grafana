@@ -36,6 +36,7 @@ all_stations = set()
 param_stations = defaultdict(set)
 prefix_stations = defaultdict(set)
 suffixes = defaultdict(set)
+rows_param_station = defaultdict(dict)
 
 for ts in timeseries:
     param = ts.split('_', 2)[2]
@@ -50,9 +51,14 @@ for ts in timeseries:
         prefix_stations[prefix].add(station)
         suffixes[prefix].add(suffix)  # set only if there is actual data
 
-query = '''
-SELECT * FROM {} ORDER BY time {} LIMIT 1
-'''
+        # param_stations is already set
+        # add in a row count for param and station
+        count_query = "SELECT COUNT(*) FROM {} WHERE station = '{}';"
+        res = cur.execute(count_query.format(ts, station))
+        rows = res.fetchone()[0]
+        rows_param_station[param][station] = rows
+
+firstlast_query = 'SELECT * FROM {} ORDER BY time {} LIMIT 1'
 param_start = defaultdict(list)
 prefix_start = defaultdict(list)
 param_end = defaultdict(list)
@@ -62,7 +68,7 @@ for ts in timeseries:
     param = ts.split('_')[2]
     prefix = param.split('_')[0]
 
-    res = cur.execute(query.format(ts, 'ASC'))
+    res = cur.execute(firstlast_query.format(ts, 'ASC'))
 
     cols = [c[0] for c in res.description]
     assert cols == ['time', 'station', 'value']
@@ -72,7 +78,7 @@ for ts in timeseries:
         param_start[param].append(v[0])
         prefix_start[prefix].append(v[0])
 
-    res = cur.execute(query.format(ts, 'DESC'))
+    res = cur.execute(firstlast_query.format(ts, 'DESC'))
     values = res.fetchall()
     for v in values:
         param_end[param].append(v[0])
@@ -84,7 +90,12 @@ utc = datetime.timezone.utc
 print('prefixes')
 for pre in sorted(prefix_start.keys()):
     print('', pre+'_', *[p for p in sorted(prefix_stations[pre])])
-    print(' ', *suffixes[pre])
+    for suffix in sorted(suffixes[pre]):
+        print(' ', suffix, end=' ')
+        param = pre + '_' + suffix
+        for station in sorted(rows_param_station[param]):
+            print(station, '({})'.format(rows_param_station[param][station]), end=' ')
+        print()
     print(' ', min(prefix_start[pre]), max(prefix_end[pre]))
     print(' ', datetime.datetime.fromtimestamp(min(prefix_start[pre]), tz=utc).isoformat(),
           datetime.datetime.fromtimestamp(max(prefix_end[pre]), tz=utc).isoformat())
