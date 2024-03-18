@@ -1,0 +1,48 @@
+{
+  "template_files": {},
+  "template_file_provenances": {},
+  "alertmanager_config": {
+    "route": {
+      "receiver": "Slack #ehtobs_bots_testing",
+      "group_by": [
+        "grafana_folder",
+        "alertname"
+      ]
+    },
+    "templates": null,
+    "receivers": [
+      {
+        "name": "grafana-default-email",
+        "grafana_managed_receiver_configs": [
+          {
+            "uid": "fHhR8QLVz",
+            "name": "email receiver",
+            "type": "email",
+            "disableResolveMessage": false,
+            "settings": {
+              "addresses": "<example@email.com>"
+            },
+            "secureFields": {}
+          }
+        ]
+      },
+      {
+        "name": "Slack #ehtobs_bots_testing",
+        "grafana_managed_receiver_configs": [
+          {
+            "uid": "wOhRUwLVz",
+            "name": "Slack #ehtobs_bots_testing",
+            "type": "slack",
+            "disableResolveMessage": false,
+            "settings": {
+              "recipient": "#ehtobs_bots_testing"
+            },
+            "secureFields": {
+              "url": true
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
