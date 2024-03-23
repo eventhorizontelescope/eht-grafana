@@ -1,4 +1,4 @@
-# eht-monitor-demo
+# eht-grafana
 
 This repo contains configuration information to set up a Grafana
 server to display data downloaded from vlbimon. The download code is
