@@ -10,6 +10,8 @@ dashboards in Grafana.
 During the observation, you can discuss vlbimonitor and Grafana in
 the #vlbimonitor Slack channel.
 
+## Screenshots (Tsys and weather)
+
 ![Screenshot of a Tsys Dashboard](https://grafana.ehtcc.org/static/grafana-system-temp.png)
 
 ![Screenshot of the weather](https://grafana.ehtcc.org/static/grafana-weather.png)
@@ -112,8 +114,10 @@ e24j25.db is the 2024 dress rehearsal.
 ## Grafana Alerts
 
 
-## XXX vlbimon-bridge repo
+## The vlbimon-bridge repo
 
+The software that copies the vlbimonitor database into `live.db`, and also
+does transformations, can be found at https://github.com/eventhorizontelescope/vlbimon-bridge/
 
 ## If you need to make a new Grafana instance...
 
@@ -161,19 +165,3 @@ database.
 
 When you add a new database, a Grafana an admin needs to add it to
 Connections -> Data Sources before it is visible to users as a datasource.
-
-  make a new chart
-  who to ask for help
-transfomers exist
-  list of them and their column names
-  more documentation in vlbimon-bridge repo
-  refe
-  that transformers run in the bridge
-  how to make a new transformer
-    debug it in the past
-	get a code review from greg
-	pull request
-
-document how to add an upper right hand link "explainer"
-  go to dashboard
-  settings (the gear icon in the upper right) -> links -> + New Link
