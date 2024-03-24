@@ -82,11 +82,6 @@ SELECT time, station, value from ts_param_<span style="color:blue">if_1_systemTe
 WHERE time >= $__from / 1000 AND time < $__to / 1000 ORDER BY time ASC
 </pre>
 
-```
-SELECT time, station, value from ts_param_:exclamation:if_1_systemTemp:exclamation:
-WHERE time >= $__from / 1000 AND time < $__to / 1000 ORDER BY time ASC
-```
-
 and if you just wanted one station, KP, add to the WHERE clause:
 
 <pre>
@@ -95,11 +90,8 @@ WHERE time >= $__from / 1000 AND time < $__to / 1000 <span style="color:blue">AN
 ORDER BY time ASC
 </pre>
 
-```
-SELECT time, station, value from ts_param_:exclamation:if_1_systemTemp:exclamation:
-WHERE time >= $__from / 1000 AND time < $__to / 1000 :exclamation:AND station = 'KP':exclamation:
-ORDER BY time ASC
-```
+❗
+❗
 
 ### What column names are there?
 
