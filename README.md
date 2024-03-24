@@ -12,9 +12,9 @@ the #vlbimonitor Slack channel.
 
 ## Screenshots (system temperature and weather)
 
-[![alt txt](https://grafana.ehtcc.orgstatic/grafana-system-temp.png)]
+![alt txt](https://grafana.ehtcc.orgstatic/grafana-system-temp.png)
 
-[![alt txt](https://grafana.ehtcc.orgstatic/grafana-weather.png)]
+![alt txt](https://grafana.ehtcc.orgstatic/grafana-weather.png)
 
 ## Getting a login
 
@@ -85,7 +85,7 @@ WHERE time >= $__from / 1000 AND time < $__to / 1000 ORDER BY time ASC
 and if you just wanted one station, KP:
 
 <pre>
-SELECT time, station, value from ts_param_<b>if_1_systemTemp<b>
+SELECT time, station, value from ts_param_<b>if_1_systemTemp</b>
 WHERE time >= $__from / 1000 AND time < $__to / 1000 <b>AND station = 'KP'</b>
 ORDER BY time ASC
 </pre>
@@ -110,7 +110,12 @@ e24j25.db is the 2024 dress rehearsal.
 
 ### Transformers
 
-XXX vlbimon-bridge repo
+
+## Grafana Alerts
+
+
+## XXX vlbimon-bridge repo
+
 
 ## If you need to make a new Grafana instance...
 
@@ -174,8 +179,3 @@ transfomers exist
 document how to add an upper right hand link "explainer"
   go to dashboard
   settings (the gear icon in the upper right) -> links -> + New Link
-
-alerting
-  currently none
-  sqlite3 plugin says that it supports alerting
-  there are no examples in examples.md
