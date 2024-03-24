@@ -10,9 +10,9 @@ dashboards in Grafana.
 During the observation, you can discuss vlbimonitor and Grafana in
 the #vlbimonitor Slack channel.
 
-[Screenshot of a Tsys Dashboard](https://grafana.ehtcc.orgstatic/grafana-system-temp.png)
+![Screenshot of a Tsys Dashboard](https://grafana.ehtcc.org/static/grafana-system-temp.png)
 
-[Screenshot of the weather](https://grafana.ehtcc.orgstatic/grafana-weather.png)
+![Screenshot of the weather](https://grafana.ehtcc.org/static/grafana-weather.png)
 
 ## Getting a login
 
