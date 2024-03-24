@@ -78,15 +78,15 @@ rest is just boilerplate.
 In this example, the name is `if_1_systemTemp`:
 
 <pre>
-SELECT time, station, value from ts_param_<b>if_1_systemTemp</b>
+SELECT time, station, value from ts_param_<i>if_1_systemTemp</i>
 WHERE time >= $__from / 1000 AND time < $__to / 1000 ORDER BY time ASC
 </pre>
 
-and if you just wanted one station, KP:
+and if you just wanted one station, KP, add to the WHERE clause:
 
 <pre>
-SELECT time, station, value from ts_param_<b>if_1_systemTemp</b>
-WHERE time >= $__from / 1000 AND time < $__to / 1000 <b>AND station = 'KP'</b>
+SELECT time, station, value from ts_param_<i>if_1_systemTemp</i>
+WHERE time >= $__from / 1000 AND time < $__to / 1000 <i>AND station = 'KP'</i>
 ORDER BY time ASC
 </pre>
 
