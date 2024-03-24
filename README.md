@@ -1,7 +1,8 @@
 # eht-grafana
 
 The EHT has a monitoring data collection system, and two user interfaces
-for it: [vlbimonitor](https://vlbimon1.science.ru.nl/) and Grafana.
+for it: [VLBI Monitor](https://vlbimon1.science.ru.nl/) and
+[Grafana](https://grafana.ehtcc.org/).
 
 This document contains instructions for viewing and creating new
 dashboards in Grafana.
@@ -11,8 +12,9 @@ the #vlbimonitor Slack channel.
 
 ## Screenshots (system temperature and weather)
 
-![alt txt](https://grafana.ehtcc.orgstatic/grafana-system-temp.png)
-![alt txt](https://grafana.ehtcc.orgstatic/grafana-weather.png)
+[![alt txt](https://grafana.ehtcc.orgstatic/grafana-system-temp.png)]
+
+[![alt txt](https://grafana.ehtcc.orgstatic/grafana-weather.png)]
 
 ## Getting a login
 
@@ -75,18 +77,18 @@ rest is just boilerplate.
 
 In this example, the name is `if_1_systemTemp`:
 
-```
-SELECT time, station, value from ts_param_**if_1_systemTemp**
+<pre>
+SELECT time, station, value from ts_param_<b>if_1_systemTemp</b>
 WHERE time >= $__from / 1000 AND time < $__to / 1000 ORDER BY time ASC
-```
+</pre>
 
 and if you just wanted one station, KP:
 
-```
-SELECT time, station, value from ts_param_**if_1_systemTemp**
-WHERE time >= $__from / 1000 AND time < $__to / 1000 **AND station = 'KP'**
+<pre>
+SELECT time, station, value from ts_param_<b>if_1_systemTemp<b>
+WHERE time >= $__from / 1000 AND time < $__to / 1000 <b>AND station = 'KP'</b>
 ORDER BY time ASC
-```
+</pre>
 
 ### What column names are there?
 
