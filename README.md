@@ -77,13 +77,8 @@ rest is just boilerplate.
 
 In this example, the name is `if_1_systemTemp`:
 
-<pre>
-SELECT time, station, value from ts_param_<span style="color:blue">if_1_systemTemp</span>
-WHERE time >= $__from / 1000 AND time < $__to / 1000 ORDER BY time ASC
-</pre>
-
-```text
-SELECT time, station, value from ts_param_❗if_1_systemTemp❗
+```
+SELECT time, station, value from ts_param_if_1_systemTemp
 WHERE time >= $__from / 1000 AND time < $__to / 1000 ORDER BY time ASC
 ```
 
