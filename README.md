@@ -10,7 +10,9 @@ dashboards in Grafana.
 During the observation, you can discuss vlbimonitor and Grafana in
 the #vlbimonitor Slack channel.
 
-## Screenshots (Tsys and weather)
+## Screenshots
+
+![Screenshot of the Stations Summary](https://grafana.ehtcc.org/static/eht-grafana-stations-summary.png)
 
 ![Screenshot of a Tsys Dashboard](https://grafana.ehtcc.org/static/grafana-system-temp.png)
 
@@ -99,20 +101,38 @@ https://grafana.ehtcc.org/static/summary2023.txt
 
 ### What data sources are there?
 
-The production dashboards all use "live.db" as the data source,
+The production dashboards all use `live.db` as the data source,
 which is a real-time updated copy of the vlbimonitor database.
 
-Last year's live.db is renamed to eht2023.db
+Last year's `live.db` is renamed to `eht2023.db`
 
 There are also individual databases representing single days of
 previous observations, named by the experiment name. For example,
-e24j25.db is the 2024 dress rehearsal.
+`e24j25.db` is the 2024 dress rehearsal.
 
 ### Transformers
+
+Grafana has a way to transform data points before showing them in a chart,
+but it's difficult to use. To make life easier, `vlbimon-bridge` implements
+set of "transformers".
+
+As an example, sky coordinates are represented in vlbimon as a string
+like `14.588+80.996`. While there's no perfect way to represent a position
+on the sky as a function of time, it is handy to have this string value
+split into 2 additional timeseries, named `foo_ra` and `foo_dec`, with floating
+point values. There is a transformer that does this for all RaDec and all Azel
+in the vlbimon database.
 
 
 ## Grafana Alerts
 
+https://grafana.com/docs/grafana/latest/alerting/alerting-rules/create-grafana-managed-rule/
+
+To add a new Grafana alert "contact" that posts to a Slack channel,
+you need to get a webhook from here: https://api.slack.com/apps (app
+name: grafana-alerts). There are already channels configured in
+Grafana for: ehtobs_bots, ehtobs_bots_urgent, ehtobs_bots_testing, and
+ehtobs_bots_grafanatest.
 
 ## The vlbimon-bridge repo
 
